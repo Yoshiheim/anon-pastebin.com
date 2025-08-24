@@ -1,0 +1,84 @@
+/* Общие стили */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: rgb(255, 255, 255);
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 768px) {   
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 50px;
+    width: 60%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+.pinned_post {
+    color:rgba(236, 182, 4, 0.719);
+    box-shadow:0 0 50px rgba(236, 182, 4, 0.719);
+    text-align: center;
+    background-color:rgba(236, 182, 4, 0.719);
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Посты */
+.post-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    background: #fff;
+}
+
+.post-card h3 {
+    margin-top: 0;
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: #666;
+}

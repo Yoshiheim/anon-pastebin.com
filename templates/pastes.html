@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/newstyle.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            title of paste:
+            <input type="text" id="title">
+        </div>
+        <div>
+            paste's text:
+            <input type="text" id="content" style="height: 500px;">
+        </div>
+        <button onclick="createPaste()">create</button>
+        <script>
+            const title = document.getElementById("title")
+            const content = document.getElementById("content")
+            async function createPaste(){
+                const fet = await fetch("/create-paste",{
+                    method: "POST",
+                    body: JSON.stringify({
+                        "title": title.value,
+                        "content": content.value,
+                    })
+                }).then(res => location.reload()).catch(err => alert(err))
+            }
+        </script>
+    </div>
+    {{range .}}
+        <div class="container">
+            <div class="post-card" style="background-color: #f0f0f0; border: 1px solid #ccc;">
+                <h3>{{.ID}}</h3>
+                <h4>{{.Title}}</h4>
+                <a href="/pastes/html/view?id={{.ID}}"><button>View this paste</button></a>
+                <div>
+                    <button onclick="deletePaste()" style="background-color:rgb(255, 72, 72)">delete paste</button>
+                </div>
+                <script>
+                    async function deletePaste(){
+                        const fet = await fetch(`/pastes/del?id={{.ID}}`,{
+                            method: "POST"
+                        }).then(res => location.reload()).catch(err => alert(err))
+                    }
+            </script>
+            </div>
+        </div>
+    {{end}}
+</body>
+</html>
