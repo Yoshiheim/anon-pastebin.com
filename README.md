@@ -1,3 +1,4 @@
 ﻿# anon-pastebin.com
-just anonymous pastebin without auth.
-просто анонимный пастебин без регестрации.
+## Just anonymous(with priting user-agent through log.Println() lmao) pastebin without auth.
+## Просто анонимный(с печататьем user-agent через log.Println() лол) пастебин без регестрации.
+
