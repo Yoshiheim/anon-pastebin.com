@@ -172,7 +172,7 @@ func GetReq(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "POST required", http.StatusMethodNotAllowed)
 		return
 	}
-	site, err := http.Get("https://e621.net")
+	site, err := http.Get("https://en.wikipedia.org/wiki/Go_(programming_language)")
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error with get...", http.StatusNotAcceptable)
