@@ -17,12 +17,6 @@ func main() {
 		port = "10000"
 	}
 
-	//http.Handle("/mid-test", middle.LoggingMiddleware(http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {})))
-
-	// Раздача фронтенда
-	//fs := http.FileServer(http.Dir("./static"))
-	//http.Handle("/", fs)
-
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
@@ -31,5 +25,4 @@ func main() {
 	if err := http.ListenAndServe("0.0.0.0:"+port, nil); err != nil {
 		panic(err)
 	}
-
 }

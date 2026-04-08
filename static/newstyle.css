@@ -6,6 +6,28 @@ body {
     padding: 0;
 }
 
+#githublink {
+    position: fixed;
+    top: 0;          /* Прижать к верхней границе */
+    left: 0;         /* Прижать к левой границе */
+    width: 100%;     /* Растянуть на всю ширину */
+    z-index: 1000;   /* Чтобы элемент был поверх остальных */
+    background-color: #3b3b3bce; 
+    text-align: center;
+    box-shadow: 0px 0px 10px black;
+}
+
+#creatordiv{
+    position: fixed;
+    top: 0;          /* Прижать к верхней границе */
+    left: 0;         /* Прижать к левой границе */
+    width: 100%;     /* Растянуть на всю ширину */
+    z-index: 1000;   /* Чтобы элемент был поверх остальных */
+    background-color:#297fb967; 
+    text-align: center;
+    box-shadow: 0px 0px 10px black;
+}
+
 .container {
     max-width: 800px;
     margin: 40px auto;
