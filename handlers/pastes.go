@@ -93,7 +93,6 @@ func RenderPastesWithHtml(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
 	}
-	log.Println(r.UserAgent())
 	templ.Execute(w, pastes)
 }
 
@@ -175,6 +174,10 @@ func DeletePaste(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	id := r.URL.Query().Get("id")
+	if id == "" {
+		http.Error(w, "id is empty", http.StatusBadRequest)
+		return
+	}
 	num, err := strconv.Atoi(id)
 	if err != nil {
 		log.Println(err)
@@ -187,6 +190,7 @@ func DeletePaste(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error with db", http.StatusNotAcceptable)
 		return
 	}
+	log.Printf("Paste %d deleted.\n", num)
 	http.Error(w, "okay", http.StatusOK)
 }
 

@@ -14,7 +14,7 @@ func InitPastes() {
 	http.Handle("/pastes/del", helpers.LimitMiddleware(http.HandlerFunc(handlers.DeletePaste)))
 
 	//for everyone!
-	http.HandleFunc("/", handlers.RenderPastesWithHtml)
+	helpers.MiddlewareHand("/", http.HandlerFunc(handlers.RenderPastesWithHtml))
 	http.HandleFunc("/pastes", handlers.RenderPastes)
 	http.HandleFunc("/pastes/local", handlers.RenderLocalPaste)
 	http.HandleFunc("/pastes/html/view", handlers.ViewPaste)

@@ -38,17 +38,18 @@
                 <h4>{{.Title}}</h4>
                 <a href="/pastes/html/view?id={{.ID}}"><button>View this paste</button></a>
                 <div>
-                    <button onclick="deletePaste()" style="background-color:rgb(255, 72, 72)">delete paste</button>
+                    <button onclick="deletePaste('{{.ID}}')" style="background-color:rgb(255, 72, 72)">delete paste</button>
                 </div>
-                <script>
-                    async function deletePaste(){
-                        const fet = await fetch(`/pastes/del?id={{.ID}}`,{
-                            method: "POST"
-                        }).then(res => location.reload()).catch(err => alert(err))
-                    }
-            </script>
             </div>
         </div>
     {{end}}
+    <script>
+        async function deletePaste(id){
+            const fet = await fetch(`/pastes/del?id=${id}`,{
+                method: "POST"
+            }).then(res => location.reload()).catch(err => alert(err))
+        }
+    </script>
+
 </body>
 </html>
