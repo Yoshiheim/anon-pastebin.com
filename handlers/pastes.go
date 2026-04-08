@@ -32,6 +32,8 @@ func RenderPastes(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("pastes: %v\n", gets)
 
+	w.Header().Set("Content-Type", "application/json")
+
 	helpers.EncodeJson(w, map[string]interface{}{
 		"data": pastes,
 	})
