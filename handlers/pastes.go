@@ -7,7 +7,6 @@ import (
 	"go-virtual-currency/helpers"
 	"go-virtual-currency/models"
 	"html"
-	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -151,6 +150,9 @@ func CreatePaste(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mj.Title = helpers.EscapeString(mj.Title, 100)
+	mj.Content = helpers.EscapeString(mj.Content, 30000)
+
 	// Сохраняем в БД
 	cre := db.DB.Create(&models.Paste{
 		Title:   mj.Title,
@@ -164,36 +166,6 @@ func CreatePaste(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Ответ (по желанию)
-	w.WriteHeader(http.StatusCreated)
-}
-
-func GetReq(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "POST required", http.StatusMethodNotAllowed)
-		return
-	}
-	site, err := http.Get("https://en.wikipedia.org/wiki/Go_(programming_language)")
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Error with get...", http.StatusNotAcceptable)
-		return
-	}
-	buff, err := io.ReadAll(site.Body)
-	if err != nil {
-		http.Error(w, "Error with copy", http.StatusBadGateway)
-		return
-	}
-	cre := db.DB.Create(&models.Paste{
-		Title:   "test",
-		Content: string(buff),
-	})
-
-	if cre.Error != nil {
-		log.Println("DB Create Error:", cre.Error)
-		http.Error(w, "Cannot create paste", http.StatusNotAcceptable)
-		return
-	}
-
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -221,66 +193,4 @@ func DeletePaste(w http.ResponseWriter, r *http.Request) {
 type URLBro struct {
 	First  string `json:"first"`
 	Second string `json:"second"`
-}
-
-func Create2Posts(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "POST required", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var ub URLBro
-
-	if err := json.NewDecoder(r.Body).Decode(&ub); err != nil {
-		log.Println("JSON Decode Error:", err)
-		http.Error(w, "Cannot parse JSON body", http.StatusBadRequest)
-		return
-	}
-
-	site, err := http.Get(ub.First)
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Error with get...", http.StatusNotAcceptable)
-		return
-	}
-	buff, err := io.ReadAll(site.Body)
-	if err != nil {
-		http.Error(w, "Error with copy", http.StatusBadGateway)
-		return
-	}
-	cre := db.DB.Create(&models.Paste{
-		Title:   "first",
-		Content: string(buff),
-	})
-
-	if cre.Error != nil {
-		log.Println("DB Create Error:", cre.Error)
-		http.Error(w, "Cannot create paste", http.StatusNotAcceptable)
-		return
-	}
-
-	site2, err := http.Get(ub.Second)
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Error with get...(second)", http.StatusNotAcceptable)
-		return
-	}
-	buff2, err := io.ReadAll(site2.Body)
-	if err != nil {
-		http.Error(w, "Error with copy(second)", http.StatusBadGateway)
-		return
-	}
-
-	cre2 := db.DB.Create(&models.Paste{
-		Title:   "second",
-		Content: string(buff2),
-	})
-
-	if cre2.Error != nil {
-		log.Println("DB Create Error(second):", cre2.Error)
-		http.Error(w, "Cannot create paste(second)", http.StatusNotAcceptable)
-		return
-	}
-
-	w.WriteHeader(http.StatusCreated)
 }
